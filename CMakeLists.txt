@@ -6,7 +6,8 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-#find_package(absl REQUIRED)
+find_package(Boost REQUIRED COMPONENTS serialization)
+include_directories(${Boost_INCLUDE_DIRS})
 
 add_library(limitorderbook INTERFACE)
 #target_include_directories(limitorderbook INTERFACE

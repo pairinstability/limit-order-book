@@ -1,11 +1,11 @@
 #ifndef BOOK_H_
 #define BOOK_H_
 
+#include <iostream>
 #include <list>
 #include <map>
 #include <memory>
 #include <unordered_map>
-#include <iostream>
 
 namespace OrderBook {
 
@@ -32,9 +32,14 @@ struct Order {
     size_t event_time;
 
     template <class Archive>
-    void serialize(Archive& archive)
+    void serialize(Archive& ar, const unsigned int version)
     {
-        archive(id_number, order_type, shares, limit, entry_time, event_time);
+        ar& id_number;
+        ar& order_type;
+        ar& shares;
+        ar& limit;
+        ar& entry_time;
+        ar& event_time;
     }
 };
 
@@ -74,10 +79,6 @@ private:
     // iterators to ensure that access in the orders list is O(1)
     OrderList::iterator m_lowest_sell;
     OrderList::reverse_iterator m_highest_buy;
-
-    //  serialization
-    //    std::string serializeOrder(const Order& order);
-    //    std::unique_ptr<Order> deserializeOrder(const std::string& data);
 
     inline void updateBook()
     {
@@ -189,8 +190,6 @@ public:
         };
     }
 
-    // if the limit doesn't exist, do nothing.
-
     /// @brief Executes an order from the order book.
     /// @details Runs O(1).
     /// A buy limit order will be executed only at the limit price or a lower price.
@@ -215,10 +214,6 @@ public:
     {
         return m_lowest_sell->limit;
     };
-
-    // for comms between client and server
-    //    void processRequest(const std::string& request);
-    //    std::string handleRequest(const std::string& request);
 };
 }
 
