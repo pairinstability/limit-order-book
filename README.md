@@ -56,7 +56,6 @@ enum class OrderType {
 };
 
 struct Order {
-    // key
     size_t id_number;
     OrderType order_type;
     size_t shares;
@@ -83,6 +82,7 @@ struct Limit {
     std::list<Order> orders;
 };
 
+// keyed on limit price
 std::map<size_t, Limit> m_buy_tree;
 std::map<size_t, Limit> m_sell_tree;
 
@@ -90,7 +90,6 @@ std::map<size_t, Limit> m_sell_tree;
 std::unordered_map<size_t, std::list<Order>::iterator> m_order_hashtable;
 
 // Hashmap of limit rbtree iterators keyed on limit.limit_price.
-// The value is a ptr to a Limit into whichever rb binary search tree.
 std::unordered_map<size_t, std::map<size_t, Limit>::iterator> m_limit_hashtable;
 
 std::list<Order>::iterator m_lowest_sell;
