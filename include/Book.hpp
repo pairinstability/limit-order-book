@@ -76,7 +76,6 @@ private:
     // The value is a ptr to a Limit into whichever rb binary search tree.
     LimitHashtable m_limit_hashtable;
 
-    // iterators to ensure that access in the orders list is O(1)
     OrderList::iterator m_lowest_sell;
     OrderList::reverse_iterator m_highest_buy;
 
